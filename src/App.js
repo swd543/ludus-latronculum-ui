@@ -5,19 +5,32 @@ export default class App extends React.Component {
 
   constructor() {
     super()
-    const dimensions = { rows: 7, columns: 8 }
+    const dimensions = { ulrich: { rows: 8, columns: 8, lineup: 2 }, kowalski: { rows: 8, columns: 12, lineup: 1, dux: { x: 3 } } }
     const defaultState = undefined
 
-    this.initalizeBoard = () => {
+    this.initalizeBoard = (name) => {
+      name = name || 'ulrich'
+      const dim = dimensions[name]
       const board = []
-      board.push(new Array(dimensions.columns).fill('black'))
-      for (var i = 0; i < dimensions.rows - 2; i++) {
-        board.push(new Array(dimensions.columns).fill(defaultState))
+
+      for (var i = 0; i < dimensions[name].lineup; i++) {
+        board.push(new Array(dim.columns).fill('black'))
       }
-      board.push(new Array(dimensions.columns).fill('white'))
+      for (var j = 0; j < dim.rows - 2 * dimensions[name].lineup; j++) {
+        board.push(new Array(dim.columns).fill(defaultState))
+      }
+      for (var k = 0; k < dimensions[name].lineup; k++) {
+        board.push(new Array(dim.columns).fill('white'))
+      }
+
+      dim.dux && (board[dim.lineup][dim.dux.x] = 'dux ' + board[1][1])
+      dim.dux && (board[dim.rows - dim.lineup - 1][dim.columns - dim.dux.x - 1] = 'dux ' + board[1][1])
+      this.setState({ name, retired: this.getRetired() })
       return board;
     }
-    this.state = { board: this.initalizeBoard(), dimensions }
+    this.getRetired = () => []
+    this.state = { board: this.initalizeBoard(), dimensions, retired: this.getRetired() }
+    this.dimensionString = dimensions.rows + 'x' + dimensions.columns
   }
 
   // Drag handler
@@ -49,6 +62,14 @@ export default class App extends React.Component {
     this.setState({ board: board }, this.countPieces)
   }
 
+  dropHandlerRetired = (e) => {
+    const { retired, board } = this.state
+    const data = JSON.parse(e.dataTransfer.getData("dragData"))
+    board[data.i][data.j] = this.defaultState
+    retired.push(data.c)
+    this.setState({ board: board, retired: retired }, this.countPieces)
+  }
+
   render() {
     return (
       <div className="App">
@@ -59,22 +80,44 @@ export default class App extends React.Component {
           <button onClick={() => this.setState({ board: this.initalizeBoard() })}>
             New game
           </button>
+          <button onClick={() => this.setState({ board: this.initalizeBoard('ulrich') })}>
+            Ulrich
+          </button>
+          <button onClick={() => this.setState({ board: this.initalizeBoard('kowalski') })}>
+            Kowalski
+          </button>
           {
             this.state.counts && Object.entries(this.state.counts).filter(v => v[0] !== 'undefined').map((k, v) => <p key={v}>{k[0]} : {k[1]}</p>)
           }
+          <p>
+            Board is {this.state.board && this.state.board.length}x{this.state.board && this.state.board[0].length}
+          </p>
         </div>
         <div className="Game">
-          <table>
-            <tbody>
-              {this.state.board.map((r, i) => <tr key={i}>
-                {r.map((c, j) => <td key={j} className={c || ((i + j) % 2 === 0 ? 'odd' : 'even')} draggable={c !== undefined}
-                  onDragStart={this.dragStartHandler({ c, i, j })}
-                  onDragOver={this.dragOverHandler({})}
-                  onDrop={this.dropHandler({ c, i, j })} />
-                )}
-              </tr>)}
-            </tbody>
-          </table>
+          <div style={{ minHeight: 80, display: 'flex', alignItems: 'center' }}>
+            <h1 style={{ margin: 'auto' }}>
+              {this.state.name || 'ulrich'}
+            </h1>
+          </div>
+          <div style={{ margin: 'auto' }}>
+            <table>
+              <tbody>
+                {this.state.board.map((r, i) => <tr key={i}>
+                  {r.map((c, j) => <td key={j} className={c || ((i + j) % 2 === 0 ? 'odd' : 'even')} draggable={c !== undefined}
+                    onDragStart={this.dragStartHandler({ c, i, j })}
+                    onDragOver={this.dragOverHandler({})}
+                    onDrop={this.dropHandler({ c, i, j })} />
+                  )}
+                </tr>)}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ border: '1px dashed green', minHeight: 80, display: 'flex' }} onDrop={this.dropHandlerRetired}
+            onDragOver={(e) => {
+              e.preventDefault()
+            }}>
+            {this.state.retired && this.state.retired.map((k, v) => <div key={v} className={k} style={{ padding: 40, margin: 4 }}></div>)}
+          </div>
         </div>
       </div>
     );
