@@ -1,0 +1,64 @@
+.App {
+  text-align: center;
+  flex-direction: row;
+  display: flex;
+}
+
+.Drawer {
+  background-color: rgba(100, 100, 100, 0.1);
+}
+
+.Drawer button {
+  border: 0px none;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  width: 100%;
+  padding: 8px;
+}
+
+.Drawer button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.Game {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: auto;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.Game td {
+  padding: 40px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.Game .odd {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.Game .even {
+  background-color: rgba(100, 100, 100, 0.4);
+}
+
+.white {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.dux {
+  background-color: blue !important;
+  color: white;
+}
+
+.black {
+  background-color: black;
+  border: 1px solid white;
+}
+
+.Game td:hover {
+  opacity: 1;
+  transition: 200ms all;
+}
