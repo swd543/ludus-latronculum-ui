@@ -20,7 +20,11 @@ jobs:
     - name: Install Packages
       run: npm install
     - name: Deploy to GH Pages
-      run: npm run deploy
+      run: |
+        git config --global user.email "swd543@gmail.com"
+        git config --global user.name "swd543"
+        git remote set-url origin https://${{secrets.PERSONAL_ACCESS_TOKEN}}@github.com/swd543/ludus-latronculum-ui.git
+        npm run deploy
     - name: Updating Domain
       run: echo "Updated domain"
       env:
