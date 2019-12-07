@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ludus-latronculum-ui/static/css/main.2d9a2103.chunk.css",
+    "main.js": "/ludus-latronculum-ui/static/js/main.91b86d0d.chunk.js",
+    "main.js.map": "/ludus-latronculum-ui/static/js/main.91b86d0d.chunk.js.map",
+    "runtime-main.js": "/ludus-latronculum-ui/static/js/runtime-main.d7026624.js",
+    "runtime-main.js.map": "/ludus-latronculum-ui/static/js/runtime-main.d7026624.js.map",
+    "static/js/2.e4c748e9.chunk.js": "/ludus-latronculum-ui/static/js/2.e4c748e9.chunk.js",
+    "static/js/2.e4c748e9.chunk.js.map": "/ludus-latronculum-ui/static/js/2.e4c748e9.chunk.js.map",
+    "index.html": "/ludus-latronculum-ui/index.html",
+    "precache-manifest.a036006a9f781c953da53c6cc4585793.js": "/ludus-latronculum-ui/precache-manifest.a036006a9f781c953da53c6cc4585793.js",
+    "service-worker.js": "/ludus-latronculum-ui/service-worker.js",
+    "static/css/main.2d9a2103.chunk.css.map": "/ludus-latronculum-ui/static/css/main.2d9a2103.chunk.css.map"
+  }
+}
