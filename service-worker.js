@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ludus-latronculum-ui/precache-manifest.a036006a9f781c953da53c6cc4585793.js"
+  "/ludus-latronculum-ui/precache-manifest.df4fedf4c42fb0aa1c3748a865fb218c.js"
 );
 
 self.addEventListener('message', (event) => {
