@@ -17,10 +17,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+        super-secret: ${{secrets.PERSONAL_ACCESS_TOKEN}}
     - name: Install Packages
       run: npm install
     - name: Deploy to GH Pages
-      run: npm run deploy
+      run: |
+        git config --global user.email "swd543@gmail.com"
+        git config --global user.name "swd543"
+        git remote set-url origin https://${{super-secret}}@github.com/swd543/ludus-latronculum-ui.git
+        npm run deploy
     - name: Updating Domain
       run: echo "Updated domain"
       env:
